@@ -59,6 +59,10 @@ export function Todolist(props: PropsType) {
         props.addTask(props.todolistId, title)  //id мы берем сверху (из App), а title снизу (из AddItemForm)
     }
 
+    const onChangeTitleHandler = (taskId:string, newTitle: string) => {
+        props.changeTaskTitleHandler(props.todolistId, taskId, newTitle);
+    }
+
     const changeTodoListTitle = (newTitle: string) => {
         props.changeTodoListTitle(props.todolistId, newTitle)
     }
@@ -87,16 +91,16 @@ export function Todolist(props: PropsType) {
                         props.changeTaskStatus(props.todolistId, t.id, e.currentTarget.checked);
                     }
 
-                    const onChangeTitleHandler = (newTitle: string) => {
-                        props.changeTaskTitleHandler(props.todolistId, t.id, newTitle);
-                    }
+                    // const onChangeTitleHandler = (newTitle: string) => {
+                    //     props.changeTaskTitleHandler(props.todolistId, t.id, newTitle);
+                    // }
 
                     return <li key={t.id} className={t.isDone ? "is-done" : ""}>
                         <input type="checkbox"
                                onChange={onChangeHandler}
                                checked={t.isDone}/>
                         {/*<span>{t.title}</span>*/}
-                        <EditableSpan title={t.title} onChange={onChangeTitleHandler}/>
+                        <EditableSpan title={t.title} onChange={(title) => onChangeTitleHandler(t.id, title)}/>
                         <button onClick={onClickHandler}>x</button>
                     </li>
                 })
