@@ -40,16 +40,17 @@ export const AddItemForm = (props:AddItemFormPropsType) => {
     return (
         <div>
             <TextField id="outlined-basic"
-                       label="Outlined"
+                       label={error ? error : 'Type something'}
                        variant="outlined"
                        value={title}
                        onChange={onChangeHandler}
                        onKeyPress={onKeyPressHandler}
                        className={error ? "error" : ""}
                        size={'small'}
+                       error={!!error}
             />
             <Button onClick={addTask} variant={"contained"} size={"small"} style={styles}>+</Button>
-            {error && <div className="error-message">{error}</div>}
+            {/*{error && <div className="error-message">{error}</div>}*/}
         </div>
     );
 };
