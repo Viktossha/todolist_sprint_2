@@ -57,8 +57,8 @@ export function Todolist(props: PropsType) {
 
     const removeTodolistHandler = () => props.removeTodolist(props.todolistId);
 
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>, id: string) => {
-        props.changeTaskStatus(props.todolistId, id, e.currentTarget.checked);
+    const onChangeHandler = (isDone: boolean, id: string) => {
+        props.changeTaskStatus(props.todolistId, id, isDone);
     }
 
 
@@ -107,7 +107,7 @@ export function Todolist(props: PropsType) {
                     return <li key={t.id} className={t.isDone ? "is-done" : ""}>
                         {/*<Checkbox onChange={onChangeHandler}*/}
                         {/*          checked={t.isDone} />*/}
-                        <CustomCheckbox onChange={(e: ChangeEvent<HTMLInputElement>) => onChangeHandler(e, t.id)} checked={t.isDone}/>
+                        <CustomCheckbox onChange={(isDone) => onChangeHandler(isDone, t.id)} checked={t.isDone}/>
                         {/*<span>{t.title}</span>*/}
                         <EditableSpan title={t.title} onChange={(title) => onChangeTitleHandler(t.id, title)}/>
                         <IconButton aria-label="delete" onClick={onClickHandler}>
