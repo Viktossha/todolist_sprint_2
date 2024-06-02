@@ -4,6 +4,7 @@ import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import {Button, Checkbox, IconButton} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
+import {CustomCheckbox} from "./Checkbox";
 
 type TaskType = {
     id: string
@@ -56,6 +57,10 @@ export function Todolist(props: PropsType) {
 
     const removeTodolistHandler = () => props.removeTodolist(props.todolistId);
 
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>, id: string) => {
+        props.changeTaskStatus(props.todolistId, id, e.currentTarget.checked);
+    }
+
 
     const addTaskHandler = (title: string) => {
         props.addTask(props.todolistId, title)  //id мы берем сверху (из App), а title снизу (из AddItemForm)
@@ -91,17 +96,18 @@ export function Todolist(props: PropsType) {
             {
                 props.tasks.map(t => {
                     const onClickHandler = () => props.removeTask(props.todolistId, t.id)
-                    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                        props.changeTaskStatus(props.todolistId, t.id, e.currentTarget.checked);
-                    }
+                    // const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+                    //     props.changeTaskStatus(props.todolistId, t.id, e.currentTarget.checked);
+                    // }
 
                     // const onChangeTitleHandler = (newTitle: string) => {
                     //     props.changeTaskTitleHandler(props.todolistId, t.id, newTitle);
                     // }
 
                     return <li key={t.id} className={t.isDone ? "is-done" : ""}>
-                        <Checkbox onChange={onChangeHandler}
-                                  checked={t.isDone} />
+                        {/*<Checkbox onChange={onChangeHandler}*/}
+                        {/*          checked={t.isDone} />*/}
+                        <CustomCheckbox onChange={(e: ChangeEvent<HTMLInputElement>) => onChangeHandler(e, t.id)} checked={t.isDone}/>
                         {/*<span>{t.title}</span>*/}
                         <EditableSpan title={t.title} onChange={(title) => onChangeTitleHandler(t.id, title)}/>
                         <IconButton aria-label="delete" onClick={onClickHandler}>
